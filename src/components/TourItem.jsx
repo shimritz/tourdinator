@@ -14,12 +14,16 @@ export default function TourItem({ tour, id, onEdit, onDelete }) {
           loading="lazy"
           src={tour.imgUrls[0]}
         />
-        <Moment
+        {/* <Moment
           className="absolute top-2 left-2 bg-[#3377cc] text-white uppercase text-xs font-semibold rounded-md px-2 py-1 shadow-lg"
           fromNow
         >
           {tour.timestamp?.toDate()}
-        </Moment>
+          {tour.startdate}
+        </Moment> */}
+        <p className="absolute top-2 left-2 bg-[#3377cc] text-white uppercase text-xs font-semibold rounded-md px-2 py-1 shadow-lg">
+          {tour.startdate}
+        </p>
         <div className="w-full p-[10px]">
           <div className="flex items-center space-x-1">
             <MdLocationOn className="h-4 w-4 text-green-600" />

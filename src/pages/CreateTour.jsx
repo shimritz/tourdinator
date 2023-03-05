@@ -29,9 +29,10 @@ export default function CreateTour() {
     busTour: false,
     kidsFriendly: false,
     meetingPoint: "",
-    arrivalTime: "",
+    startdate: "",
+    starthour: "",
     description: "",
-    tourLanguage: null, //add dropdown choose language
+    tourLanguage: null,
     food: false,
     price: 0,
     PricePerChild: 0,
@@ -47,7 +48,8 @@ export default function CreateTour() {
     busTour,
     kidsFriendly,
     meetingPoint,
-    arrivalTime,
+    startdate,
+    starthour,
     description,
     tourLanguage,
     food,
@@ -361,16 +363,31 @@ export default function CreateTour() {
             </div>
           </div>
         )}
-        <p className="text-lg mt-6 font-semibold">Arrival Time</p>
-        <input
-          type="time"
-          id="arrivalTime"
-          value={arrivalTime}
-          onChange={onChange}
-          placeholder="Select a time"
-          required
-          className="w-full px-4 py-2 text-xl text-gray-700 bg-white border border-gray-300 rounded transition duration-150 ease-in-out focus:text-gray-700 focus:bg-white focus:border-slate-600 mb-6"
-        />
+        <div className="text-lg mt-6 font-semibold ">
+          <p>Arrival Time</p>
+          <div className="flex flex-row">
+            <p className="text-sm mt-6 font-semibold ">date</p>
+            <input
+              type="date"
+              id="startdate"
+              value={startdate}
+              onChange={onChange}
+              placeholder="Select a date"
+              required
+              className="w-full px-4 py-2 text-xl text-gray-700 bg-white border border-gray-300 rounded transition duration-150 ease-in-out focus:text-gray-700 focus:bg-white focus:border-slate-600 mb-6"
+            />
+            <p className="text-sm mt-6 font-semibold flex flex-col">hour</p>
+            <input
+              type="time"
+              id="starthour"
+              value={starthour}
+              onChange={onChange}
+              placeholder="Select a time"
+              required
+              className="w-50% px-4 py-2 text-xl text-gray-700 bg-white border border-gray-300 rounded transition duration-150 ease-in-out focus:text-gray-700 focus:bg-white focus:border-slate-600 mb-6"
+            />
+          </div>
+        </div>
         <p className="text-lg font-semibold">Description</p>
         <textarea
           type="text"
