@@ -1,0 +1,11 @@
+
+Hope you enjoy your new logo, here are the people that
+made your beautiful logo happen :)
+font name: Mogra-Regular
+font link: https://fonts.google.com/specimen/Mogra
+font author: Lipi Raval
+font author site: http://cargocollective.com/lipi
+Slogan Font: Fanwood Text.otf
+
+{"bg":"#E9F1EF","icon-gradient-0":"#021802","icon-gradient-1":"#60DBCC","font":"#163530","slogan":"#2a4944"}
+      
