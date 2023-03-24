@@ -15,7 +15,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Dropdown from "../components/Dropdown";
 import { useEffect } from "react";
 
-export default function EditListing() {
+export default function EditTour() {
   const navigate = useNavigate();
   const auth = getAuth();
   const [geolocationEnabled, setGeolocationEnabled] = useState(true);

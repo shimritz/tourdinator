@@ -13,10 +13,12 @@ import SwiperCore, {
 } from "swiper";
 import "swiper/css/bundle";
 import { FaShare, FaMapMarkerAlt, FaMountain } from "react-icons/fa";
+import { TbCurrencyShekel } from "react-icons/tb";
 import { GiDuration, GiBus, GiHotMeal } from "react-icons/gi";
 import { TbMoodKid } from "react-icons/tb";
 import { getAuth } from "firebase/auth";
 import Contact from "../components/Contact";
+import Join from "../components/Join";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 
 export default function Tour() {
@@ -26,6 +28,7 @@ export default function Tour() {
   const [loading, setLoading] = useState(true);
   const [shareLinkCopied, setShareLinkCopied] = useState(false);
   const [contactOrginizer, setContactOrginizer] = useState(false);
+  const [joinTour, setJoinTour] = useState(false);
   SwiperCore.use([Autoplay, Navigation, Pagination]);
   useEffect(() => {
     async function fetchTour() {
@@ -83,14 +86,16 @@ export default function Tour() {
 
       <div className="m-4 flex flex-col md:flex-row max-w-6xl lg:mx-auto p-4 rounded-lg shadow-lg bg-white lg:space-x-5">
         <div className=" w-full ">
-          <p className="text-2xl font-bold mb-3 text-blue-900">
-            {tour.name} - ${" "}
+          <p className="text-2xl font-bold mb-3 text-blue-900 flex flex-nowrap items-end">
+            {tour.name} -
             {tour.offer
               ? tour.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
               : tour.discountedPrice
                   ?.toString()
                   .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+            <TbCurrencyShekel className="text-lg" />
           </p>
+
           <p className="flex items-center mt-6 mb-3 font-semibold">
             <FaMapMarkerAlt className="text-green-700 mr-1" />
             {tour.meetingPoint}
@@ -101,7 +106,7 @@ export default function Tour() {
             </p>
             {tour.offer && (
               <p className="w-full max-w-[210px] bg-green-800 rounded-md p-1 text-white text-[15px] text-center font-semibold shadow-md whitespace-nowrap">
-                ${+tour.price - +tour.discountedPrice} discount for groups
+                {tour.discount}% discount for groups
               </p>
             )}
           </div>
@@ -142,18 +147,42 @@ export default function Tour() {
               {tour.food ? "Food included" : "bring your own food"}
             </li>
           </ul>
-          {tour.userRef !== auth.currentUser?.uid && !contactOrginizer && (
-            <div className="mt-6">
-              <button
-                onClick={() => setContactOrginizer(true)}
-                className="px-7 py-3 bg-blue-600 text-white font-medium text-sm uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg w-full text-center transition duration-150 ease-in-out "
-              >
-                Contact Orginizer
-              </button>
-            </div>
-          )}
+          {tour.userRef !== auth.currentUser?.uid &&
+            !contactOrginizer &&
+            !joinTour && (
+              <div className="mt-6 flex flex-col space-y-1">
+                <button
+                  onClick={() => setContactOrginizer(true)}
+                  className="px-7 py-3 bg-blue-600 text-white font-medium text-sm uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg w-full text-center transition duration-150 ease-in-out "
+                >
+                  Contact Orginizer
+                </button>
+                <button
+                  onClick={() => setJoinTour(true)}
+                  className="px-7 py-3 bg-red-600 text-white font-medium text-sm uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg w-full text-center transition duration-150 ease-in-out "
+                >
+                  Join
+                </button>
+              </div>
+            )}
           {contactOrginizer && <Contact userRef={tour.userRef} tour={tour} />}
+          {joinTour && <Join userRef={tour.userRef} tour={tour} />}
         </div>
+
+        {/* {tour.userRef !== auth.currentUser?.uid && !joinTour && (
+          <div className="mt-6">
+            <button
+              onClick={() => setJoinTour(true)}
+              className="px-7 py-3 bg-blue-600 text-white font-medium text-sm uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg w-full text-center transition duration-150 ease-in-out "
+            >
+              Join
+            </button>
+          </div>
+        )}
+        {joinTour && <Join userRef={tour.userRef} tour={tour} />}
+      </div> */}
+        {/* </ */}
+
         <div className="w-full h-[200px] md:h-[400px] z-10 overflow-x-hidden mt-6 md:mt-0 md:ml-2">
           <MapContainer
             center={[tour.geolocation.lat, tour.geolocation.lng]}

@@ -5,7 +5,11 @@ import { FaTrash } from "react-icons/fa";
 import { MdEdit } from "react-icons/md";
 import { FaMountain } from "react-icons/fa";
 import Join from "./Join";
-export default function TourItem({ tour, id, onEdit, onDelete }) {
+export default function TourItem({ tour, id, onEdit, onDelete, onJoin }) {
+  // function onJoin(attending, spots) {
+  //   attending++;
+  //   spots = spots - attending;
+  // }
   return (
     <li className="relative bg-white flex flex-col justify-between items-center shadow-md hover:shadow-xl rounded-md overflow-hidden transition-shadow duration-150 m-[10px]">
       <Link className="contents" to={`/category/${tour.type}/${id}`}>
@@ -35,9 +39,9 @@ export default function TourItem({ tour, id, onEdit, onDelete }) {
           <p className="text-[#457b9d] mt-2 font-semibold">
             $
             {tour.offer
-              ? tour.discountedPrice
-                  .toString()
-                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+              ? // ? tour.discountedPrice
+                tour.discountStartAt &&
+                tour.discount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
               : tour.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
           </p>
           <div className="flex items-center mt-[10px] space-x-3">
@@ -53,23 +57,30 @@ export default function TourItem({ tour, id, onEdit, onDelete }) {
               <p className="font-bold text-xs">
                 {tour.duration > 24 ? `A package tour` : "daytour"}
               </p>
-              <Join />
             </div>
+          </div>
+          <div>
+            {/* <Join
+              price={tour.price}
+              attending={tour.attending}
+              spots={tour.attending}
+              // onClick={() => onJoin(tour.attending, tour.spots)}
+            /> */}
           </div>
         </div>
       </Link>
-      {onDelete && (
-        <FaTrash
-          className="absolute bottom-2 right-2 h-[14px] cursor-pointer text-red-500"
-          onClick={() => onDelete(tour.id)}
-        />
-      )}
-      {onEdit && (
-        <MdEdit
-          className="absolute bottom-2 right-7 h-4 cursor-pointer "
-          onClick={() => onEdit(tour.id)}
-        />
-      )}
+      {/* {onDelete && ( */}
+      <FaTrash
+        className="absolute bottom-2 right-2 h-[14px] cursor-pointer text-red-500"
+        onClick={() => onDelete(tour.id)}
+      />
+      {/* )} */}
+      {/* {onEdit && ( */}
+      <MdEdit
+        className="absolute bottom-2 right-7 h-4 cursor-pointer "
+        onClick={() => onEdit(tour.id)}
+      />
+      {/* )} */}
     </li>
   );
 }
