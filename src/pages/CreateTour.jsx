@@ -368,10 +368,11 @@ export default function CreateTour() {
             </div>
           </div>
         )}
-        <div className="text-lg mt-6 font-semibold ">
+        <div className="text-lg mt-6 font-semibold flex flex-col space-x-1">
           <p>Arrival Time</p>
-          <div className="flex flex-row">
-            <p className="text-sm mt-6 font-semibold ">date</p>
+
+          <div className="text-sm mt-6 font-semibold flex flex-col">
+            <p> date</p>
             <input
               type="date"
               id="startdate"
@@ -379,9 +380,11 @@ export default function CreateTour() {
               onChange={onChange}
               placeholder="Select a date"
               required
-              className="w-full px-4 py-2 text-xl text-gray-700 bg-white border border-gray-300 rounded transition duration-150 ease-in-out focus:text-gray-700 focus:bg-white focus:border-slate-600 mb-6"
+              className="w-60% px-4 py-2 text-xl text-gray-700 bg-white border border-gray-300 rounded transition duration-150 ease-in-out focus:text-gray-700 focus:bg-white focus:border-slate-600 mb-6"
             />
-            <p className="text-sm mt-6 font-semibold flex flex-col">hour</p>
+          </div>
+          <div className="text-sm mt-6 font-semibold flex flex-col">
+            <p>hour</p>
             <input
               type="time"
               id="starthour"
@@ -389,10 +392,11 @@ export default function CreateTour() {
               onChange={onChange}
               placeholder="Select a time"
               required
-              className="w-50% px-4 py-2 text-xl text-gray-700 bg-white border border-gray-300 rounded transition duration-150 ease-in-out focus:text-gray-700 focus:bg-white focus:border-slate-600 mb-6"
+              className="bg-hidden w-40% px-4 py-2 text-xl text-gray-700 bg-white border border-gray-300 rounded transition duration-150 ease-in-out focus:text-gray-700 focus:bg-white focus:border-slate-600 mb-6"
             />
           </div>
         </div>
+
         <p className="text-lg font-semibold">Description</p>
         <textarea
           type="text"

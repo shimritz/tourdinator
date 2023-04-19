@@ -89,10 +89,10 @@ export default function Tour() {
           <p className="text-2xl font-bold mb-3 text-blue-900 flex flex-nowrap items-end">
             {tour.name} -
             {tour.offer
-              ? tour.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-              : tour.discountedPrice
-                  ?.toString()
-                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+              ? tour.discountedPrice
+                  .toString()
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+              : tour.price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
             <TbCurrencyShekel className="text-lg" />
           </p>
 
