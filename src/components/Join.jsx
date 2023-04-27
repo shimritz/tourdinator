@@ -7,7 +7,6 @@ export default function Join({ tour }) {
   // const amount = Number(tour.ticketsAmount);
   const discount = Number(tour.discount);
   const discountStartAt = Number(tour.discountStartAt);
-  console.log("tour", tour);
   const handleChange = (e) => {
     setTicketsAmount(e.target.value);
   };
@@ -24,10 +23,7 @@ export default function Join({ tour }) {
   // const totalPrice = 0;
   const totalPriceCalculation = () => {
     let totalPrice = 0;
-    console.log(typeof ticketsAmount, "ticketsAmount", ticketsAmount);
     // console.log(typeof amount, "amount", amount);
-    console.log(typeof ticketsAmount, "ticketsAmount", ticketsAmount);
-    console.log(typeof discountStartAt, "discountStartAt", discountStartAt);
 
     const isDiscountProvided = discount > 0;
     const shouldCalculateDiscount = ticketsAmount >= discountStartAt;
@@ -41,6 +37,10 @@ export default function Join({ tour }) {
 
     setTotalPrice(totalPrice);
   };
+
+  function handleJoin() {
+    const attending = [];
+  }
 
   return (
     <div className="flex justify-between space-x-3">
@@ -62,7 +62,7 @@ export default function Join({ tour }) {
       {/* </div> */}
       <span className="p-3 text-black-50 rounded w-8px">{totalPrice}</span>
       <button
-        // onClick={onJoin}
+        onClick={handleJoin}
         type="button"
         className="w-50% h-20px px-1 py-2 bg-blue-600 text-white font-medium text-sm uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg w-full text-center transition duration-150 ease-in-out "
       >

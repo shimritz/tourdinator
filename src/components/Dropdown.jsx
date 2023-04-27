@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { GoTriangleDown } from "react-icons/go";
 
-export default function Dropdown({ options, value, onChange }) {
+export default function Dropdown({ options, value, handleSelect }) {
   const [isOpen, setIsOpen] = useState(false);
   const divEl = useRef();
 
@@ -18,7 +18,7 @@ export default function Dropdown({ options, value, onChange }) {
 
   const handleOptionClick = (option) => {
     setIsOpen(false);
-    onChange(option);
+    handleSelect(option.value);
   };
 
   const renderedOptions = options.map((option) => {
@@ -40,7 +40,7 @@ export default function Dropdown({ options, value, onChange }) {
         onClick={handleClick}
         // ref={divEl}
       >
-        {value?.label || "Select..."}
+        {value || "Select..."}
         {/* <GOChevronDown /> */}
         <GoTriangleDown className="text-md text-gray-400" />
       </div>

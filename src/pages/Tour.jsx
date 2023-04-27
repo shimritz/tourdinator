@@ -90,7 +90,7 @@ export default function Tour() {
             {tour.name} -
             {tour.offer
               ? tour.discountedPrice
-                  .toString()
+                  ?.toString()
                   .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
               : tour.price?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
             <TbCurrencyShekel className="text-lg" />
@@ -138,9 +138,17 @@ export default function Tour() {
               ""
             )}
             {/* </li> */}
+            {tour.busTour ? (
+              <li className="flex items-center whitespace-nowrap">
+                <GiBus className="text-lg mr-1" />
+                "bus included"
+              </li>
+            ) : (
+              ""
+            )}
+
             <li className="flex items-center whitespace-nowrap">
-              <GiBus className="text-lg mr-1" />
-              {tour.busTour ? "Bus included" : ""}
+              {`language of the tour is: ${tour.tourLanguage}`}
             </li>
             <li className="flex items-center whitespace-nowrap">
               <GiHotMeal className="text-lg mr-1" />

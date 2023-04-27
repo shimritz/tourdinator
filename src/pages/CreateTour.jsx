@@ -20,10 +20,12 @@ export default function CreateTour() {
   const auth = getAuth();
   const [geolocationEnabled, setGeolocationEnabled] = useState(true);
   const [loading, setLoading] = useState(false);
-  const [selection, setSelection] = useState(null);
+  const [selection, setSelection] = useState("Hebrew");
   const [formData, setFormData] = useState({
     type: "daytour",
     name: "",
+    places: 0,
+    attendingNumber: 0,
     difficultyLevel: 1,
     duration: 1, //maybe add dropdown chose from list: hours/days
     busTour: false,
@@ -47,6 +49,8 @@ export default function CreateTour() {
   const {
     type,
     name,
+    places,
+    attendingNumber,
     difficultyLevel,
     duration,
     busTour,
@@ -70,7 +74,6 @@ export default function CreateTour() {
     let boolean = null;
     if (e.target.value === "true") {
       boolean = true;
-      console.log(e.target.value);
     }
     if (e.target.value === "false") {
       boolean = false;
@@ -111,7 +114,6 @@ export default function CreateTour() {
         `https://maps.googleapis.com/maps/api/geocode/json?address=${meetingPoint}&key=${process.env.REACT_APP_GEOCODE_API_KEY}`
       );
       const data = await response.json();
-      console.log(data);
       geolocation.lat = data.results[0]?.geometry.location.lat ?? 0;
       geolocation.lng = data.results[0]?.geometry.location.lng ?? 0;
 
@@ -184,22 +186,23 @@ export default function CreateTour() {
     !formDataCopy.offer && delete formDataCopy.discountedPrice;
     delete formDataCopy.latitude;
     delete formDataCopy.longitude;
+    formDataCopy.tourLanguage = selection;
     const docRef = await addDoc(collection(db, "tours"), formDataCopy);
     setLoading(false);
     toast.success("Tour created");
-    console.log(formDataCopy.type);
     navigate(`/category/${formDataCopy.type}/${docRef.id}`);
   }
 
-  //dropdown selection
-  const handleSelect = (option) => {
-    setSelection(option);
-  };
+  // dropdown selection
+  function handleSelect(optionValue) {
+    setSelection(optionValue);
+  }
 
   const options = [
-    { label: "Hebreu", value: "Hebreu" },
+    { label: "Hebrew", value: "Hebrew" },
     { label: "English", value: "English" },
     { label: "Russian", value: "Russian" },
+    { label: "French", value: "French" },
   ];
 
   if (loading) {
@@ -247,6 +250,17 @@ export default function CreateTour() {
           placeholder="Name"
           maxLength="32"
           minLength="10"
+          required
+          className="w-full px-4 py-2 text-xl text-gray-700 bg-white border border-gray-300 rounded transition duration-150 ease-in-out focus:text-gray-700 focus:bg-white focus:border-slate-600 mb-6"
+        />
+        <p className="text-lg mt-6 font-semibold">Number of participants</p>
+        <input
+          type="number"
+          id="places"
+          value={places}
+          onChange={onChange}
+          placeholder="Number of participants"
+          minLength="1"
           required
           className="w-full px-4 py-2 text-xl text-gray-700 bg-white border border-gray-300 rounded transition duration-150 ease-in-out focus:text-gray-700 focus:bg-white focus:border-slate-600 mb-6"
         />
@@ -414,8 +428,10 @@ export default function CreateTour() {
 
         <Dropdown
           options={options}
+          id="tourLanguage"
+          // value={tourLanguage}
           value={selection}
-          onChange={handleSelect}
+          handleSelect={handleSelect}
           required
         />
 

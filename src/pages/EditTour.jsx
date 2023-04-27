@@ -20,7 +20,6 @@ export default function EditTour() {
   const auth = getAuth();
   const [geolocationEnabled, setGeolocationEnabled] = useState(true);
   const [loading, setLoading] = useState(false);
-  const [selection, setSelection] = useState(null);
   const [tour, setTour] = useState(null);
   const [formData, setFormData] = useState({
     type: "daytour",
@@ -32,7 +31,7 @@ export default function EditTour() {
     meetingPoint: "",
     arrivalTime: "",
     description: "",
-    tourLanguage: false, //add dropdown choose language
+    tourLanguage: "",
     food: false,
     price: 0,
     PricePerChild: 0,
@@ -61,6 +60,7 @@ export default function EditTour() {
     images,
   } = formData;
 
+  const [selection, setSelection] = useState("");
   const params = useParams();
 
   useEffect(() => {
@@ -72,12 +72,16 @@ export default function EditTour() {
 
   useEffect(() => {
     setLoading(true);
+
     async function fetchTours() {
       const docRef = doc(db, "tours", params.tourId);
       const docSnap = await getDoc(docRef);
+
       if (docSnap.exists()) {
-        setTour(docSnap.data());
-        setFormData({ ...docSnap.data() });
+        const snap = docSnap.data();
+        setTour(snap);
+        setFormData({ ...snap });
+        setSelection(snap.tourLanguage);
         setLoading(false);
       } else {
         navigate("/");
@@ -88,14 +92,15 @@ export default function EditTour() {
   }, [navigate, params.TourId]);
 
   //dropdown selection
-  const handleSelect = (option) => {
-    setSelection(option);
+  const handleSelect = (optionValue) => {
+    setSelection(optionValue);
   };
 
   const options = [
-    { label: "Hebreu", value: "Hebreu" },
+    { label: "Hebrew", value: "Hebrew" },
     { label: "English", value: "English" },
     { label: "Russian", value: "Russian" },
+    { label: "French", value: "French" },
   ];
 
   function onChange(e) {
@@ -141,7 +146,6 @@ export default function EditTour() {
         `https://maps.googleapis.com/maps/api/geocode/json?address=${meetingPoint}&key=${process.env.REACT_APP_GEOCODE_API_KEY}`
       );
       const data = await response.json();
-      console.log(data);
       geolocation.lat = data.results[0]?.geometry.location.lat ?? 0;
       geolocation.lng = data.results[0]?.geometry.location.lng ?? 0;
 
@@ -214,6 +218,7 @@ export default function EditTour() {
     !formDataCopy.offer && delete formDataCopy.discountedPrice;
     delete formDataCopy.latitude;
     delete formDataCopy.longitude;
+    formDataCopy.tourLanguage = selection;
     const docRef = doc(db, "tours", params.tourId);
 
     await updateDoc(docRef, formDataCopy);
@@ -440,7 +445,12 @@ export default function EditTour() {
         <p className="text-lg font-semibold">
           Please select the language of the tour
         </p>
-        <Dropdown options={options} value={selection} onChange={handleSelect} />
+        <Dropdown
+          options={options}
+          value={selection}
+          id="tourLanguage"
+          handleSelect={handleSelect}
+        />
 
         <p className="text-lg font-semibold">Food</p>
         <div className="flex mb-6">

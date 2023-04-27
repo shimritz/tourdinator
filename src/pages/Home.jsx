@@ -100,7 +100,6 @@ export default function Home() {
           });
         });
         setPackagetourTours(tours);
-        console.log("tours,", tours);
       } catch (error) {
         console.log(error);
       }
